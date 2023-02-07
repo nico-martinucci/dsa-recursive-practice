@@ -13,7 +13,7 @@ function product(nums) {
    * p([2, 3, 4]) => bottom of the stack
    */
 
-  if(nums.length === 0) return 1;
+  if (nums.length === 0) return 1;
   return nums[0] * product(nums.slice(1))
 }
 
@@ -28,7 +28,7 @@ function longest(words) {
    * l(["hello", "hi", "hola"]) => bottom of the stack => 5
    */
 
-  if(words.length === 0) return 0;
+  if (words.length === 0) return 0;
 
   return Math.max(words[0].length, longest(words.slice(1)))
 }
@@ -45,7 +45,7 @@ function everyOther(str) {
    * e("hello")
    */
 
-  if(str.length === 0) return "";
+  if (str.length === 0) return "";
 
   return str[0] + everyOther(str.slice(2))
 
@@ -54,25 +54,36 @@ function everyOther(str) {
 /** find: return boolean depending on if val exists in array or not. */
 
 function find(arr, val) {
+  if (arr.length === 0) return false;
 
+  return arr[0] === val || find(arr.slice(1), val)
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not. */
 
 function isPalindrome(str) {
+  // tacocat => "o"
+  // taccat => ""
+  if (str.length <= 1) return true;
 
+  return str[0] === str[str.length - 1] && isPalindrome(str.slice(1, str.length - 1))
 }
 
 /** revString: return a copy of a string, but in reverse. */
 
 function revString(str) {
-
+  if (str.length <= 1) return str;
+  console.log(str.slice(0, str.length - 1));
+  return str[str.length - 1] + revString(str.slice(0, str.length - 1));
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
 function findIndex(arr, val) {
+  if (arr.length === 0) return -1;
+  if (arr[arr.length - 1] === val) return arr.length - 1;
 
+  findIndex(arr.slice(0, arr.length - 1), val)
 }
 
 /** gatherStrings: given an object, return an array of all of the string values. */
@@ -81,9 +92,9 @@ function gatherStrings(obj) {
 
   let results = []
 
-  function _gatherStrs(obj){
-    for(let val of Object.values(obj)){
-      if(typeof val === "object") {
+  function _gatherStrs(obj) {
+    for (let val of Object.values(obj)) {
+      if (typeof val === "object") {
         _gatherStrs(val)
       } else if (typeof val === "string") {
         results.push(val)
