@@ -48,7 +48,6 @@ function everyOther(str) {
   if (str.length === 0) return "";
 
   return str[0] + everyOther(str.slice(2))
-
 }
 
 /** find: return boolean depending on if val exists in array or not. */
@@ -62,8 +61,6 @@ function find(arr, val) {
 /** isPalindrome: checks whether a string is a palindrome or not. */
 
 function isPalindrome(str) {
-  // tacocat => "o"
-  // taccat => ""
   if (str.length <= 1) return true;
 
   return str[0] === str[str.length - 1] && isPalindrome(str.slice(1, str.length - 1))
@@ -73,17 +70,17 @@ function isPalindrome(str) {
 
 function revString(str) {
   if (str.length <= 1) return str;
-  console.log(str.slice(0, str.length - 1));
+
   return str[str.length - 1] + revString(str.slice(0, str.length - 1));
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
-function findIndex(arr, val) {
-  if (arr.length === 0) return -1;
-  if (arr[arr.length - 1] === val) return arr.length - 1;
+function findIndex(arr, val, i = 0) {
+  if (i >= arr.length) return -1;
 
-  findIndex(arr.slice(0, arr.length - 1), val)
+  return arr[i] === val ? i : findIndex(arr, val, i + 1);
+
 }
 
 /** gatherStrings: given an object, return an array of all of the string values. */
