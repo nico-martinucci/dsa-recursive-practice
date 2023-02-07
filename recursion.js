@@ -14,7 +14,7 @@ function product(nums) {
    */
 
   if (nums.length === 0) return 1;
-  return nums[0] * product(nums.slice(1))
+  return nums[0] * product(nums.slice(1));
 }
 
 /** longest: return the length of the longest word in an array of words. */
@@ -30,7 +30,7 @@ function longest(words) {
 
   if (words.length === 0) return 0;
 
-  return Math.max(words[0].length, longest(words.slice(1)))
+  return Math.max(words[0].length, longest(words.slice(1)));
 }
 
 /** everyOther: return a string with every other letter. */
@@ -47,7 +47,7 @@ function everyOther(str) {
 
   if (str.length === 0) return "";
 
-  return str[0] + everyOther(str.slice(2))
+  return str[0] + everyOther(str.slice(2));
 }
 
 /** find: return boolean depending on if val exists in array or not. */
@@ -55,7 +55,7 @@ function everyOther(str) {
 function find(arr, val) {
   if (arr.length === 0) return false;
 
-  return arr[0] === val || find(arr.slice(1), val)
+  return arr[0] === val || find(arr.slice(1), val);
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not. */
@@ -63,7 +63,7 @@ function find(arr, val) {
 function isPalindrome(str) {
   if (str.length <= 1) return true;
 
-  return str[0] === str[str.length - 1] && isPalindrome(str.slice(1, str.length - 1))
+  return str[0] === str[str.length - 1] && isPalindrome(str.slice(1, str.length - 1));
 }
 
 /** revString: return a copy of a string, but in reverse. */
@@ -87,14 +87,14 @@ function findIndex(arr, val, i = 0) {
 
 function gatherStrings(obj) {
 
-  let results = []
+  let results = [];
 
   function _gatherStrs(obj) {
     for (let val of Object.values(obj)) {
       if (typeof val === "object") {
-        _gatherStrs(val)
+        _gatherStrs(val);
       } else if (typeof val === "string") {
-        results.push(val)
+        results.push(val);
       }
     }
   }
@@ -109,16 +109,43 @@ function gatherStrings(obj) {
 /** binarySearch: given a sorted array of numbers, and a value,
  * return true if val is in array, false if not present). */
 
-function binarySearch(arr, val) {
+function binarySearch(arr, val, left = 0, right = arr.length - 1) {
+  // base case
+  if (left > right) {
+    return false;
+  }
 
+  const middle = Math.floor((left + right) / 2);
+
+  if (arr[middle] === val) {
+    return true;
+  } else if (arr[middle] > val) {
+    return binarySearch(arr, val, left, middle - 1);  // progress
+  } else {
+    return binarySearch(arr, val, middle + 1, right); // progress
+  }
 }
 
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
 
-function binarySearchIndex(arr, val) {
+function binarySearchIndex(arr, val, left = 0, right = arr.length - 1) {
+  // base case
 
+  if (left > right) {
+    return -1;
+  }
+
+  const middle = Math.floor((left + right) / 2);
+
+  if (arr[middle] === val) {
+    return middle;
+  } else if (arr[middle] > val) {
+    return binarySearchIndex(arr, val, left, middle - 1); // progress
+  } else {
+    return binarySearchIndex(arr, val, middle + 1, right); // progress
+  }
 }
 
 // you might find the above two problems easier if you change the function signature to:
