@@ -50,9 +50,7 @@ function makeBoard(boardString) {
 }
 
 function find(board, word) {
-
-  // word = NOON
-
+  console.log(board);
   const letterCoords = {};
 
   for (let y = 0; y < board.length; y++) {
@@ -64,67 +62,53 @@ function find(board, word) {
       letterCoords[tile].push(`${y}-${x}`);
     }
   }
+  console.log(letterCoords)
 
   // NOON
-  function search(word, i=0, coords=""){
+  function _search(word, i = 0) {
 
     let currLetter = word[i]
 
     // base case
-    if(!letterCoords[currLetter]){
-      return false;
-    } else {
+    if (!letterCoords[currLetter]) {
+      debugger;
+      return false
+    }
+    if (i === word.length - 1) {
+      debugger;
+      return true
+    }
 
-      for(let letCoord of letterCoords[word[i]]){
-        const [y, x] = letCoord.split("-")
+    for (let letCoord of letterCoords[word[i]]) {
+      let [y, x] = letCoord.split("-")
+      y = +y;
+      x = +x;
+      // check if each one away variation is included in word[i+1] array
+      const nextCoords = letterCoords[word[i + 1]];
+      debugger;
 
-        // check if each one away variation is included in word[i+1] array
-
-
-          // if it is we recurse
-          // if not return false
-
-
-        console.log(y, x)
-
-        // NO<O>N
-        // Next letter word[i+1]
-        // get all the coords of O
-
-        /**
-         * N: '0-0'
-         * O: '1-0'
-         */
-
-
-        let currL
-
-
-
-        // console.log("letCoord", letCoord)
-
-        // N<O>ON
-        // letterCoords[word[i]]
-
-
+      if (nextCoords.includes([y + 1, x].join("-"))) {
+        debugger;
+        _search(word, i + 1);
+      } else if (nextCoords.includes([y - 1, x].join("-"))) {
+        debugger;
+        _search(word, i + 1);
+      } else if (nextCoords.includes([y, x + 1].join("-"))) {
+        debugger;
+        _search(word, i + 1);
+      } else if (nextCoords.includes([y, x - 1].join("-"))) {
+        debugger;
+        _search(word, i + 1);
+      } else {
+        debugger;
+        return false;
       }
-      // search(word, i+1)
+
     }
 
   }
 
-
-  console.log(letterCoords);
-  /*
-  word = "CAT"
-
-  letterCoords = {
-    C: [[0,0], [0,2], [2,1]],
-    A: [[0,1], [1,0], [1,2], [2,0]],
-    T: [[2,2]]
-  }
-  */
-  return search("NOON")
+  return _search(word)
 }
 
 // EXAMPLE TEST
@@ -139,25 +123,25 @@ const board = makeBoard(`N C A N E
 
 // `NOON` should be found (0, 3) -> (1, 3) -> (2, 3) -> (2, 4)::
 
-console.log(find(board, "NOON"), true);
+console.log("NOON", find(board, "NOON"), true);
 
 // `NOPE` should be found (0, 3) -> (1, 3) -> (1, 4) -> (0, 4)::
 
-console.log(find(board, "NOPE"), true);
+// console.log("NOPE", find(board, "NOPE"), true);
 
-// `CANON` can't be found (`CANO` starts at (0, 1) but can't find
-// the last `N` and can't re-use the N)::
+// // `CANON` can't be found (`CANO` starts at (0, 1) but can't find
+// // the last `N` and can't re-use the N)::
 
-console.log(find(board, "CANON"), false);
+// console.log("CANON", find(board, "CANON"), false);
 
-// You cannot travel diagonally in one move, which would be required
-// to find `QUINE`::
+// // You cannot travel diagonally in one move, which would be required
+// // to find `QUINE`::
 
-console.log(find(board, "QUINE"), false);
+// console.log("QUINE", find(board, "QUINE"), false);
 
-// We can recover if we start going down a false path (start 3, 0)::
+// // We can recover if we start going down a false path (start 3, 0)::
 
-console.log(find(board, "FADED"), true);
+// console.log("FADED", find(board, "FADED"), true);
 
 // An extra tricky case --- it needs to find the `N` toward the top right,
 // and then go down, left, up, up, right to find all four `O`s and the `S`::
