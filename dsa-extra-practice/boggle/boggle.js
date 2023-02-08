@@ -37,7 +37,7 @@ For example::
 */
 function makeBoard(boardString) {
   const letters = boardString.split(/\s+/);
-  console.log("boardString:", boardString, "letters:", letters)
+  // console.log("boardString:", boardString, "letters:", letters)
   const board = [
     letters.slice(0, 5),
     letters.slice(5, 10),
@@ -50,7 +50,9 @@ function makeBoard(boardString) {
 }
 
 function find(board, word) {
-  console.log(board);
+
+  // word = NOON
+
   const letterCoords = {};
 
   for (let y = 0; y < board.length; y++) {
@@ -59,9 +61,58 @@ function find(board, word) {
       if (!letterCoords[tile]) {
         letterCoords[tile] = [];
       }
-      letterCoords[tile].push([y, x]);
+      letterCoords[tile].push(`${y}-${x}`);
     }
   }
+
+  // NOON
+  function search(word, i=0, coords=""){
+
+    let currLetter = word[i]
+
+    // base case
+    if(!letterCoords[currLetter]){
+      return false;
+    } else {
+
+      for(let letCoord of letterCoords[word[i]]){
+        const [y, x] = letCoord.split("-")
+
+        // check if each one away variation is included in word[i+1] array
+
+
+          // if it is we recurse
+          // if not return false
+
+
+        console.log(y, x)
+
+        // NO<O>N
+        // Next letter word[i+1]
+        // get all the coords of O
+
+        /**
+         * N: '0-0'
+         * O: '1-0'
+         */
+
+
+        let currL
+
+
+
+        // console.log("letCoord", letCoord)
+
+        // N<O>ON
+        // letterCoords[word[i]]
+
+
+      }
+      // search(word, i+1)
+    }
+
+  }
+
 
   console.log(letterCoords);
   /*
@@ -73,7 +124,7 @@ function find(board, word) {
     T: [[2,2]]
   }
   */
-
+  return search("NOON")
 }
 
 // EXAMPLE TEST
