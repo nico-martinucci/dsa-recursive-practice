@@ -22,23 +22,22 @@ front row, and there's no other `N` you can reach.
 
 */
 
+/** Make a board from a string.
+
+For example::
+
+    board = makeBoard(`N C A N E
+                        O U I O P
+                        Z Q Z O N
+                        F A D P L
+                        E D E A Z`);
+
+    board.length   // 5
+    board[0]       // ['N', 'C', 'A', 'N', 'E']
+*/
 function makeBoard(boardString) {
-  /** Make a board from a string.
-
-    For example::
-
-        board = makeBoard(`N C A N E
-                           O U I O P
-                           Z Q Z O N
-                           F A D P L
-                           E D E A Z`);
-
-        board.length   // 5
-        board[0]       // ['N', 'C', 'A', 'N', 'E']
-    */
-
   const letters = boardString.split(/\s+/);
-
+  console.log("boardString:", boardString, "letters:", letters)
   const board = [
     letters.slice(0, 5),
     letters.slice(5, 10),
@@ -51,8 +50,30 @@ function makeBoard(boardString) {
 }
 
 function find(board, word) {
-  /** Can word be found in board? */
-  // TODO
+  console.log(board);
+  const letterCoords = {};
+
+  for (let y = 0; y < board.length; y++) {
+    for (let x = 0; x < board[0].length; x++) {
+      let tile = board[y][x]
+      if (!letterCoords[tile]) {
+        letterCoords[tile] = [];
+      }
+      letterCoords[tile].push([y, x]);
+    }
+  }
+
+  console.log(letterCoords);
+  /*
+  word = "CAT"
+
+  letterCoords = {
+    C: [[0,0], [0,2], [2,1]],
+    A: [[0,1], [1,0], [1,2], [2,0]],
+    T: [[2,2]]
+  }
+  */
+
 }
 
 // EXAMPLE TEST
@@ -90,10 +111,10 @@ console.log(find(board, "FADED"), true);
 // An extra tricky case --- it needs to find the `N` toward the top right,
 // and then go down, left, up, up, right to find all four `O`s and the `S`::
 
-const board2 = makeBoard(`E D O S Z
-                          N S O N R
-                          O U O O P
-                          Z Q Z O R
-                          F A D P L`);
+// const board2 = makeBoard(`E D O S Z
+//                           N S O N R
+//                           O U O O P
+//                           Z Q Z O R
+//                           F A D P L`);
 
-console.log(find(board2, "NOOOOS"), true);
+// console.log(find(board2, "NOOOOS"), true);
