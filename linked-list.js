@@ -194,6 +194,18 @@ class LinkedList {
     this.head.next = left;
 
   }
+
+  logVals() {
+    let vals = [];
+    let currNode = this.head;
+
+    while (currNode !== null) {
+      vals.push(currNode.val);
+      currNode = currNode.next;
+    }
+
+    return vals;
+  }
 }
 
 module.exports = LinkedList;
