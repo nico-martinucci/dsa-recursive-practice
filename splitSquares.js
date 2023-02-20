@@ -76,22 +76,16 @@ function simplify(square) {
 }
 
 
+/**
+ * add: adds two squares together; "adding" in this context means returning a 1
+ * if either cell is a 1, or 0 if they're both 0. Will return a square of 
+ * nested-ness that matches the more complex of the two squares.
+ * 
+ * @param {number | (number | [])[]} squareOne - first square to add
+ * @param {number | (number | [])[]} squareTwo - second square to add
+ * @returns new square representing the "sum" of the two input squares
+ */
 function add(squareOne, squareTwo) {
-    // some element of comparison: we'll have moments where one will be an
-    //      array of length 4 and the other will just be a value; need to turn the
-    //      value into an array of length 4 populated with just that value
-
-    // base: if both s1 and s2 are numbers AND either s1 or s2 is a 1, return 1; otherwise return 0
-    //      (can probably just return the Math.max of the two)
-
-    // here: one or both of s1 and s2 are arrays
-    // if either is NOT an array, convert it into an array of length 4 full of that value
-
-    // create new array 
-    // loop through s1 and s2, passing each val from each recursively into add; push results into new array
-
-    // return new array
-
     if (typeof squareOne === "number" && typeof squareTwo === "number") {
         // will return 1 if either is a 1; 0 if neither is a 1
         return Math.max(squareOne, squareTwo);
