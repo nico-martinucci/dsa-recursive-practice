@@ -20,7 +20,39 @@ function dump(square, accumulator=[]) {
     return accumulator.join(" ");
 }
 
+/**
+ * validate: Validates if a provided square is valid. Valid squares are made up
+ * of only 1s, 0s, and arrays of length 4.
+ * 
+ * @example
+ *  input: 1
+ *  output: true
+ * 
+ *  input: 2
+ *  output: false
+ * 
+ *  input: [1, 0, 1, 1]
+ *  output: true
+ * 
+ *  input: [1, 0, 1, 1, 1]
+ *  output: false
+ * 
+ * @param {*} square 
+ * @returns 
+ */
+function validate(square) {
+    if (!Array.isArray(square)) return square === 0 || square === 1;
+    if (Array.isArray(square) && square.length !== 4) return false;
+
+    let isValidSquare = true;
+    for (let elem of square) {
+        isValidSquare = isValidSquare && validate(elem);
+    }
+
+    return isValidSquare;
+}
 
 module.exports = {
-    dump
+    dump,
+    validate
 }
