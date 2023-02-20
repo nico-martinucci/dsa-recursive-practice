@@ -199,12 +199,20 @@ class LinkedList {
     let vals = [];
     let currNode = this.head;
 
-    while (currNode !== null) {
+    // while (currNode !== null) {
+      
+    // }
+
+    for (let i = 0; i < this.length; i++) {
       vals.push(currNode.val);
       currNode = currNode.next;
     }
 
     return vals;
+  }
+
+  makeCircular() {
+    this.tail.next = this.head;
   }
 }
 
