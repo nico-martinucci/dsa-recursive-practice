@@ -100,9 +100,47 @@ describe("simplify", function () {
 
 describe("add", function () {
     it("works for simple squares", function () {
-        const squareOne = 1;
-        const squareTwo = 2;
+        const fillSquare = 1;
+        const emptySquare = 0;
 
-        expect(add(squareOne, squareTwo)).toEqual()
+        expect(add(emptySquare, emptySquare)).toEqual(0);
+        expect(add(fillSquare, emptySquare)).toEqual(1);
+        expect(add(fillSquare, fillSquare)).toEqual(1);
     });
-})
+
+    it("works for nested squares", function () {
+        const fillSquare = 1;
+        const emptySquare = 0;
+        const squareOne = [0, 1, 0, 0];
+        const squareTwo = [0, 0, 1, 0];
+        const squareThree = [0, 1, 1, 1];
+
+        expect(add(squareOne, squareTwo)).toEqual([0, 1, 1, 0]);
+        expect(add(squareOne, squareThree)).toEqual([0, 1, 1, 1]);
+        expect(add(emptySquare, squareOne)).toEqual([0, 1, 0, 0]);
+        expect(add(fillSquare, squareOne)).toEqual([1, 1, 1, 1]);
+    });
+
+    it("works for deeply-nested squares", function () {
+        const squareOne = [0, [1, 1, 1, [0, 0, 0, 0]], [0, 0, 0, 0], 1];
+        const squareTwo = [1, [1, 0, 1, [0, 0, 1, 1]], [1, 0, 1, 0], 1];
+        
+        expect(add(squareOne, squareTwo)).toEqual(
+            [1, [1, 1, 1, [0, 0, 1, 1]], [1, 0, 1, 0], 1]
+        );
+
+        const squareThree = [0, [1, 1, 1, 0           ], [0, 0, 0, 0], 1];
+        const squareFour = [1, [1, 0, 1, [0, 0, 1, 1]], [1, 0, 1, 0], 1];
+
+        expect(add(squareThree, squareFour)).toEqual(
+            [1, [1, 1, 1, [0, 0, 1, 1]], [1, 0, 1, 0], 1]
+        );
+
+        const squareFive = [0, [1, 1, 1, 1                      ], [0, 0, 0, 0], 1];
+        const squareSix = [1, [1, 0, 1, [0, [0, 0, 0, 0], 1, 1]], [1, 0, 1, 0], 1];
+
+        expect(add(squareFive, squareSix)).toEqual(
+            [1, [1, 1, 1, [1, [1, 1, 1, 1], 1, 1]], [1, 0, 1, 0], 1]
+        );
+    })
+});

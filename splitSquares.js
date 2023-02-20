@@ -77,7 +77,50 @@ function simplify(square) {
 
 
 function add(squareOne, squareTwo) {
+    // some element of comparison: we'll have moments where one will be an
+    //      array of length 4 and the other will just be a value; need to turn the
+    //      value into an array of length 4 populated with just that value
 
+    // base: if both s1 and s2 are numbers AND either s1 or s2 is a 1, return 1; otherwise return 0
+    //      (can probably just return the Math.max of the two)
+
+    // here: one or both of s1 and s2 are arrays
+    // if either is NOT an array, convert it into an array of length 4 full of that value
+
+    // create new array 
+    // loop through s1 and s2, passing each val from each recursively into add; push results into new array
+
+    // return new array
+
+    if (typeof squareOne === "number" && typeof squareTwo === "number") {
+        // will return 1 if either is a 1; 0 if neither is a 1
+        return Math.max(squareOne, squareTwo);
+    }
+
+    let squareOneArr = squareOne;
+    let squareTwoArr = squareTwo;
+
+    if (typeof squareOne === "number") {
+        squareOneArr = [];
+        for (let i = 0; i < 4; i++) {
+            squareOneArr.push(squareOne);
+        }
+    }
+    
+    if (typeof squareTwo === "number") {
+        squareTwoArr = [];
+        for (let i = 0; i < 4; i++) {
+            squareTwoArr.push(squareTwo);
+        }
+    }
+
+    let addedSquares = [];
+
+    for (let i = 0; i < squareOneArr.length; i++) {
+        addedSquares.push(add(squareOneArr[i], squareTwoArr[i]));
+    }
+
+    return addedSquares;
 }
 
 
