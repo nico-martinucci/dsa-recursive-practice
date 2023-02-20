@@ -6,8 +6,8 @@
  *  input: [0, 0, 0, [1, 0, [1, 1, 0, 1], 0, 0]]
  *  output: "0 0 0 1 0 1 1 0 1 0 0"
  * 
- * @param {*} square - split square scheme to be dumped
- * @param {*} accumulator - optional starting data; defaults to []
+ * @param {number | (number | [])[]} square - split square scheme to be dumped
+ * @param {[]} accumulator - optional starting data; defaults to []
  * @returns string version of square's scheme
  */
 function dump(square, accumulator=[]) {
@@ -19,6 +19,7 @@ function dump(square, accumulator=[]) {
 
     return accumulator.join(" ");
 }
+
 
 /**
  * validate: Validates if a provided square is valid. Valid squares are made up
@@ -37,8 +38,8 @@ function dump(square, accumulator=[]) {
  *  input: [1, 0, 1, 1, 1]
  *  output: false
  * 
- * @param {*} square 
- * @returns 
+ * @param {number | (number | [])[]} square - split square to be validated
+ * @returns true if split square is valid; false if not
  */
 function validate(square) {
     if (!Array.isArray(square)) return square === 0 || square === 1;
@@ -52,7 +53,37 @@ function validate(square) {
     return isValidSquare;
 }
 
+
+/**
+ * simplify: Simplifies a square wherever possible, returning a simplified
+ * square. Simplifications are possible where a square is made up of all of the
+ * same value (e.g. [1, 1, 1, 1] --> 1)
+ * 
+ * @param {number | (number | [])[]} square 
+ * @returns a simplified square
+ */
+function simplify(square) {
+    if (!Array.isArray(square)) return square;
+
+    let subSquare = [];
+    for (let elem of square) {
+        subSquare.push(simplify(elem));
+    }
+
+    if (subSquare.every(s => s === subSquare[0])) return subSquare[0];
+
+    return subSquare;
+}
+
+
+function add(squareOne, squareTwo) {
+
+}
+
+
 module.exports = {
     dump,
-    validate
+    validate,
+    simplify,
+    add
 }

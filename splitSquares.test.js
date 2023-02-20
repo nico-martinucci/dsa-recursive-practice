@@ -1,5 +1,5 @@
 const exp = require("constants");
-const { dump, validate } = require("./splitSquares");
+const { dump, validate, simplify, add } = require("./splitSquares");
 
 describe("dump", function () {
     it("works for simple squares", function () {
@@ -61,3 +61,48 @@ describe("validate", function () {
         expect(validate(badNestedSquareVals)).toBeFalsy();
     });
 });
+
+describe("simplify", function () {
+    it("works for simple squares", function () {
+        const simpleSquare = 1;
+        expect(simplify(simpleSquare)).toEqual(1);
+    });
+
+    it("works for simplifying nested squares", function () {
+        const nestedSquareOnes = [1, 1, 1, 1];
+        expect(simplify(nestedSquareOnes)).toEqual(1);
+        
+        const nestedSquareMix = [1, 1, 0, 1];
+        expect(simplify(nestedSquareMix)).toEqual([1, 1, 0, 1]);
+    });
+
+    it("works for deeply-nested squares", function () {
+        const nestedSquareOnes = [1, 1, [1, 1, 1, 1], [1, 1, 1, 1]];
+        expect(simplify(nestedSquareOnes)).toEqual(1);
+
+        const nestedSquareMix = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 0, 1, 0], 0];
+        expect(simplify(nestedSquareMix)).toEqual([1, 0, [1, 0, 1, 0], 0]);
+
+        const noSimplification = [
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0]
+        ];
+        expect(simplify(noSimplification)).toEqual([
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0], 
+            [1, 0, 1, 0]
+        ])
+    })
+});
+
+describe("add", function () {
+    it("works for simple squares", function () {
+        const squareOne = 1;
+        const squareTwo = 2;
+
+        expect(add(squareOne, squareTwo)).toEqual()
+    });
+})
